@@ -58,4 +58,10 @@ class AuthController extends Controller
             'access_token' => $token
         ]); // return data user dan token dalam bentuk json
     }
+    // public function logout(Request $request){
+    //     Auth::logout();
+    //     $request->session()->invalidate();
+    //     $request->session()->regenerateToken();
+    //     return redirect('/');
+    // }
 }

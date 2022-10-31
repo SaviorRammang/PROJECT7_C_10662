@@ -27,3 +27,10 @@ use Illuminate\Support\Facades\Route;
         Route::delete('product/{id}', 'Api\ProductController@destroy');
 
     });
+    Route::group(['middlewere' => 'auth:api'], function(){
+        Route::get('employee', 'Api\EmployeeController@index');
+        Route::get('employee/{id}', 'Api\EmployeeController@show');
+        Route::post('employee', 'Api\EmployeeController@store');
+        Route::put('employee/{id}', 'Api\EmployeeController@update');
+        Route::delete('employee/{id}', 'Api\EmployeeController@destroy');
+    });
