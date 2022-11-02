@@ -64,7 +64,7 @@ class UserController extends Controller
 
             'name' => 'required|max:60',
             'email' => 'required|email:rfc,dns|unique:users',
-            'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[0-9])(?=.*[#?!@$%^&*-]).{0,7}$/',
+            'password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[0-9])(?=.*[#?!@$%^&*-]).{0,7}$/',
         ]);
 
         if($validate->fails())

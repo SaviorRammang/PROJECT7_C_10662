@@ -18,7 +18,7 @@ class AuthController extends Controller
         $validate = Validator::make($registrationData, [
             'name' => 'required|max:60',
             'email' => 'required|email:rfc,dns|unique:users',
-            'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[0-9])(?=.*[#?!@$%^&*-]).{0,7}$/',
+            'password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[0-9])(?=.*[#?!@$%^&*-]).{0,7}$/',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
 
         ]); // rule validasi input saat register
