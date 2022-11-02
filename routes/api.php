@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('register', 'Api\AuthController@register');
     Route::post('login', 'Api\AuthController@login');
+    
+    Route::middleware('auth:api')->post('/logout', function (Request $request) {
+        $request->user()->token()->delete();
+        return response([
+            'message' => 'Logged Out Successfully'
+        ]);
+    });
 
     Route::group(['middlewere' => 'auth:api'], function(){
         Route::get('product', 'Api\ProductController@index');
@@ -34,3 +41,10 @@ use Illuminate\Support\Facades\Route;
         Route::put('employee/{id}', 'Api\EmployeeController@update');
         Route::delete('employee/{id}', 'Api\EmployeeController@destroy');
     });
+    Route::group(['middleware' => 'auth:api'], function(){
+        Route::get('user', 'Api\UserController@index');
+        Route::get('user/{id}', 'Api\UserController@show');
+        Route::put('user/{id}', 'Api\UserController@update');
+        Route::delete('user/{id}', 'Api\UserController@destroy');
+    });
+    

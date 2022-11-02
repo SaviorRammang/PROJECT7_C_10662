@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+// use IdGenerator;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -28,26 +31,80 @@ class ProductController extends Controller
         ], 400);
     }
 
-    public function store(Request $request) // method create atau menambahkan sebuah data product
+    public function store(Request $request)
     {
         $storeData = $request->all();
+        
+        $configData = [
+
+            'table' => 'products',
+            'field' => 'kode',
+            'length' => 10,
+            'prefix' => date('ddMMMyy-')
+        ];
+        
+        $kode = IdGenerator::generate($configData);
+        
+        $kode = IdGenerator::generate([
+
+                'table' => 'products',
+                'field' => 'kode', 
+                'length' => 10, 
+                'prefix' => date('dMy-')
+            ]);
+    
+        
         $validate = Validator::make($storeData, [
             'nama_barang' => 'required|max:60|unique:products',
-            'kode' => 'required', 
             'harga' => 'required|numeric',
             'jumlah' => 'required|numeric'
         ]);
 
         if($validate->fails())
             return response(['message' => $validate->errors()], 400);
-
-        $products = Product::create($storeData);// Membuat sebuah data product 
         
+        $storeData['kode'] = $kode;
+        
+        $product = Product::create($storeData);
         return response([
-            'message' => 'Add product success',
-            'data' => $products
-        ],200);
+            'message' => 'Add product Success',
+            'data' => $product
+        ], 200);
     }
+
+    //     $storeData = $request->all();
+    //     $validate = Validator::make($storeData, [
+    //         'nama_barang' => 'required|max:60|unique:products',
+    //         'harga' => 'required|numeric',
+    //         'jumlah' => 'required|numeric'
+    //     ]);
+    //     $idConfig = [
+    //         'table' => 'products',
+    //         'field' => 'kode',
+    //         'length' => 10,
+    //         'prefix' => date('ddMMMyy-'),
+    //     ];
+
+    //     $kode = IdGenerator::generate($idConfig);
+    //     $kode = IdGenerator::generate([
+
+    //         'table' => 'products',
+    //         'field' => 'kode', 
+    //         'length' => 10, 
+    //         'prefix' => date('dMy-')
+    //     ]);
+    //     $storeData['kode'] = $kode;
+ 
+    //     if($validate->fails())
+    //         return response(['message' => $validate->errors()], 400);
+
+    //     $product = Product::create($storeData); //memebuat sebuah data product
+    //     return response([
+    //         'message' => 'Add product Success',
+    //         'data' => $product
+    //     ], 200);
+    // }
+    
 
     public function show ($id) // Method search atau menampilkan sebuah data product
     {

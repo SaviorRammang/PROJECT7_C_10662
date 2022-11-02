@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Session;
+// use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,8 @@ class AuthController extends Controller
         $validate = Validator::make($registrationData, [
             'name' => 'required|max:60',
             'email' => 'required|email:rfc,dns|unique:users',
-            'password' => 'required'
+            'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[0-9])(?=.*[#?!@$%^&*-]).{0,7}$/',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
 
         ]); // rule validasi input saat register
 
@@ -58,10 +60,4 @@ class AuthController extends Controller
             'access_token' => $token
         ]); // return data user dan token dalam bentuk json
     }
-    // public function logout(Request $request){
-    //     Auth::logout();
-    //     $request->session()->invalidate();
-    //     $request->session()->regenerateToken();
-    //     return redirect('/');
-    // }
 }
