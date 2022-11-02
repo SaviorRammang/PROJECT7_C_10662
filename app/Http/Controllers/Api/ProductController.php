@@ -72,40 +72,6 @@ class ProductController extends Controller
         ], 200);
     }
 
-    //     $storeData = $request->all();
-    //     $validate = Validator::make($storeData, [
-    //         'nama_barang' => 'required|max:60|unique:products',
-    //         'harga' => 'required|numeric',
-    //         'jumlah' => 'required|numeric'
-    //     ]);
-    //     $idConfig = [
-    //         'table' => 'products',
-    //         'field' => 'kode',
-    //         'length' => 10,
-    //         'prefix' => date('ddMMMyy-'),
-    //     ];
-
-    //     $kode = IdGenerator::generate($idConfig);
-    //     $kode = IdGenerator::generate([
-
-    //         'table' => 'products',
-    //         'field' => 'kode', 
-    //         'length' => 10, 
-    //         'prefix' => date('dMy-')
-    //     ]);
-    //     $storeData['kode'] = $kode;
- 
-    //     if($validate->fails())
-    //         return response(['message' => $validate->errors()], 400);
-
-    //     $product = Product::create($storeData); //memebuat sebuah data product
-    //     return response([
-    //         'message' => 'Add product Success',
-    //         'data' => $product
-    //     ], 200);
-    // }
-    
-
     public function show ($id) // Method search atau menampilkan sebuah data product
     {
         $product = Product::find($id); // Mencari data produk berdasarkan id
