@@ -8,7 +8,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
-// use IdGenerator;
 use Carbon\Carbon;
 
 class ProductController extends Controller
@@ -62,9 +61,7 @@ class ProductController extends Controller
 
         if($validate->fails())
             return response(['message' => $validate->errors()], 400);
-        
-        $storeData['kode'] = $kode;
-        
+                
         $product = Product::create($storeData);
         return response([
             'message' => 'Add product Success',
@@ -72,9 +69,9 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function show ($id) // Method search atau menampilkan sebuah data product
+    public function show ($id) 
     {
-        $product = Product::find($id); // Mencari data produk berdasarkan id
+        $product = Product::find($id); 
 
         if(!is_null($product)){
             return response([
@@ -89,7 +86,7 @@ class ProductController extends Controller
         ], 400);
     }
 
-    public function update(Request $request, $id) // method update atau mengubah sebuah data product
+    public function update(Request $request, $id) 
     {
         $product = Product::find($id);
 
